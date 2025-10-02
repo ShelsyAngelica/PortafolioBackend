@@ -119,9 +119,12 @@ class VisitApiController extends Controller
         $b = $request->string2;
         $count = 0;
 
+        if ($a == $b) {
+            return response()->json(false);
+        }
+
         for ($i = 0; $i < strlen($a); $i++) {
 
-            //Log::info($a[$i]);
             for ($j = 0; $j < strlen($b); $j++) {
                 if ($a[$i] == $b[$j]) {
                     Log::info('si');
@@ -155,14 +158,10 @@ class VisitApiController extends Controller
 
             if ($validate_number) {
                 Log::info("si soy primo " . $n);
-                //$rta = "si soy primo ";
-                //array_push($result,  $n . '-' .  $rta);
-                $result[$n] = ['descripcion' => 'si soy primo'];
+                $result[$n] =  'si soy primo';
             } else {
                 Log::info("no soy primo " . $n);
-                //$rta = "no soy primo ";
-                //array_push($result,  $n . '-' .  $rta);
-                $result[$n] = ['descripcion' => 'no soy primo'];
+                $result[$n] = 'no soy primo';
             }
         }
 
@@ -177,7 +176,7 @@ class VisitApiController extends Controller
         Log::info($request->poligono);
         switch ($request->poligono) {
             case 'Triangulo':
-                $area = ($request->base * $request->altura) / 2;
+                $area = ($request->dato1 * $request->dato2) / 2;
                 return response()->json([
                     'data'    => $area,
                     'message' => 'resultado'
@@ -185,7 +184,7 @@ class VisitApiController extends Controller
                 break;
 
             case 'Cuadrado':
-                $area = $request->lado * $request->lado;
+                $area = $request->dato1 * $request->dato2;
                 //A = l * l
                 # code...
                 return response()->json([
@@ -195,7 +194,7 @@ class VisitApiController extends Controller
                 break;
 
             case 'Rectangulo':
-                $area =  $request->largo *  $request->ancho;
+                $area =  $request->dato1 *  $request->dato2;
                 # code...
                 return response()->json([
                     'data'    => $area,
@@ -231,9 +230,6 @@ class VisitApiController extends Controller
         } while ($module != 0);
 
         $ratio = "El ratio de la imagen es: " . (int) $matches[0][0] /  $height . ":" . (int) $matches[0][1]  / $height;
-        dd($ratio);
-        //Por ejemplo, si una imagen mide 1920 x 1080 píxeles:
-        //asp1.777... ≈ 16:9ect_ratio = 1920 / 1080 = 
 
     }
 
@@ -270,12 +266,10 @@ class VisitApiController extends Controller
         // $index = 0;
 
         foreach ($matriz as $key => $array_of_matriz) {
-            //Log::info($array_of_matriz);
             foreach ($array_of_matriz as $key2 => $value) {
 
                 if ($key == $key2) {
                     $matriz[$key][$key2] = 1;
-                    //break;
                 }
             }
         }
@@ -306,9 +300,6 @@ class VisitApiController extends Controller
             }
             Log::info('***************');
         }
-
-
-        //Log::info(json_encode($matriz));
         return $matriz;
     }
 
