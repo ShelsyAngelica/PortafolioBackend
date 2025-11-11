@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\TypeVehicleApiController;
 use App\Http\Controllers\VehicleApiController;
 use App\Http\Controllers\VisitApiController;
@@ -17,9 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+
 
 Route::apiResource('car', VehicleApiController::class);
 Route::apiResource('visit', VisitApiController::class);
@@ -34,3 +34,8 @@ Route::get('matriz-table', [VisitApiController::class, 'matrizTable']);
 Route::get('decimal-binary',[VisitApiController::class, 'decimalTobinary']);
 Route::get('morse-code',[VisitApiController::class, 'morseCode']);
 Route::apiResource('type-vehicle',TypeVehicleApiController::class);
+
+
+Route::post('/login', [AuthApiController::class, 'login']);
+
+Route::post('/logout', [AuthApiController::class, 'logout'])->middleware('auth:sanctum');
